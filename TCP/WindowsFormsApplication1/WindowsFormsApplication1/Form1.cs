@@ -125,13 +125,15 @@ ProtocolType.Tcp：使用传输控制协议。
             //主窗体关闭时关闭子线程
         }
         //给客户端发送消息
-        private void btnSend_Click(object sender, EventArgs e)
+     
+
+        private void btnSend_Click_1(object sender, EventArgs e)
         {
-            try
+             try
             {
                 ShowMsg(txtMsg.Text);
                 string ip = cboIpPort.Text;
-                byte[] buffer = Encoding.UTF8.GetBytes(txtMsg.Text);
+                byte[] buffer = Encoding.UTF8.GetBytes(txtSendMsg.Text);
                 dic[ip].Send(buffer);
                 // client.Send(buffer);
             }
@@ -141,11 +143,5 @@ ProtocolType.Tcp：使用传输控制协议。
             }
 
         }
-
-
-
-
-
-
     }
 }

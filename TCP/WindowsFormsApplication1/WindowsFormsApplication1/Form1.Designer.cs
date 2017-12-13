@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ServerRecMsg = new System.Windows.Forms.Button();
+            this.btnSend = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtPORT = new System.Windows.Forms.TextBox();
@@ -41,14 +41,15 @@
             this.cboIpPort = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // ServerRecMsg
+            // btnSend
             // 
-            this.ServerRecMsg.Location = new System.Drawing.Point(432, 265);
-            this.ServerRecMsg.Name = "ServerRecMsg";
-            this.ServerRecMsg.Size = new System.Drawing.Size(75, 23);
-            this.ServerRecMsg.TabIndex = 1;
-            this.ServerRecMsg.Text = "发送";
-            this.ServerRecMsg.UseVisualStyleBackColor = true;
+            this.btnSend.Location = new System.Drawing.Point(432, 265);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSend.TabIndex = 1;
+            this.btnSend.Text = "发送";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click_1);
             // 
             // label1
             // 
@@ -137,7 +138,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(631, 357);
+            this.ClientSize = new System.Drawing.Size(600, 357);
             this.Controls.Add(this.cboIpPort);
             this.Controls.Add(this.txtSendMsg);
             this.Controls.Add(this.label4);
@@ -147,7 +148,7 @@
             this.Controls.Add(this.txtPORT);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.ServerRecMsg);
+            this.Controls.Add(this.btnSend);
             this.Controls.Add(this.btnServerConn);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -158,7 +159,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button ServerRecMsg;
+        private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtPORT;
