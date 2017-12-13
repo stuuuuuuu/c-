@@ -78,8 +78,8 @@ ProtocolType.Tcp：使用传输控制协议。
                     //string me = Dns.GetHostName();//得到本机名称
                     //MessageBox.Show(me);
                     ShowMsg(point + "连接成功！");
-                    cboIpPort.Items.Add(point);
-                    dic.Add(point, tSocket);
+                    //cboIpPort.Items.Add(point);
+                    //dic.Add(point, tSocket);
                     //接收消息
                     Thread th = new Thread(ReceiveMsg);
                     th.IsBackground = true;
@@ -125,11 +125,11 @@ ProtocolType.Tcp：使用传输控制协议。
             //主窗体关闭时关闭子线程
         }
         //给客户端发送消息
-     
+
 
         private void btnSend_Click_1(object sender, EventArgs e)
         {
-             try
+            try
             {
                 ShowMsg(txtMsg.Text);
                 string ip = cboIpPort.Text;
@@ -143,5 +143,129 @@ ProtocolType.Tcp：使用传输控制协议。
             }
 
         }
+
+
+        //客户端
+        Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        private void btnConnection_Click(object sender, EventArgs e)
+        {
+            //连接到的目标IP
+
+            IPAddress ip = IPAddress.Parse(textip.Text);
+
+            //IPAddress ip = IPAddress.Any;
+
+            //连接到目标IP的哪个应用(端口号！)
+
+            IPEndPoint point = new IPEndPoint(ip, int.Parse(textBox2.Text));
+
+            try
+
+            {
+
+                //连接到服务器
+
+                client.Connect(point);
+
+                ShowMsg1("连接成功");
+
+                ShowMsg1("服务器" + client.RemoteEndPoint.ToString());
+
+                ShowMsg1("客户端:" + client.LocalEndPoint.ToString());
+
+                //连接成功后，就可以接收服务器发送的信息了
+
+                Thread th = new Thread(ReceiveMsg1);
+
+                th.IsBackground = true;
+
+                th.Start();
+
+            }
+
+            catch (Exception ex)
+
+            {
+
+                ShowMsg1(ex.Message);
+
+            }
+
+        }
+        void ReceiveMsg1()
+
+        {
+
+            while (true)
+
+            {
+
+                try
+
+                {
+
+                    byte[] buffer = new byte[1024 * 1024];
+
+                    int n = client.Receive(buffer);
+
+                    string s = Encoding.UTF8.GetString(buffer, 0, n);
+
+                    ShowMsg1(client.RemoteEndPoint.ToString() + ":" + s);
+
+                }
+
+                catch (Exception ex)
+
+                {
+
+                    ShowMsg1(ex.Message);
+
+                    break;
+
+                }
+
+            }
+
+
+
+        }
+
+        void ShowMsg1(string msg)
+
+        {
+
+            txtInfo.AppendText(msg + "\r\n");
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            if (client != null)
+
+            {
+
+                try
+
+                {
+
+                    ShowMsg1(txtInfo.Text);
+
+                    byte[] buffer = Encoding.UTF8.GetBytes(textBox4.Text);
+
+                    client.Send(buffer);
+
+                }
+
+                catch (Exception ex)
+
+                {
+
+                    ShowMsg1(ex.Message);
+
+                }
+            }
+        }
     }
 }
+
