@@ -1,7 +1,6 @@
 C:\Users\Administrator\Desktop\c#\网络调试助手\client and Server\client and Server\bin\Debug\client and Server.exe.config
 C:\Users\Administrator\Desktop\c#\网络调试助手\client and Server\client and Server\bin\Debug\client and Server.exe
 C:\Users\Administrator\Desktop\c#\网络调试助手\client and Server\client and Server\bin\Debug\client and Server.pdb
-C:\Users\Administrator\Desktop\c#\网络调试助手\client and Server\client and Server\obj\Debug\client and Server.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Desktop\c#\网络调试助手\client and Server\client and Server\obj\Debug\client_and_Server.Form1.resources
 C:\Users\Administrator\Desktop\c#\网络调试助手\client and Server\client and Server\obj\Debug\client_and_Server.Properties.Resources.resources
 C:\Users\Administrator\Desktop\c#\网络调试助手\client and Server\client and Server\obj\Debug\client and Server.csproj.GenerateResource.Cache

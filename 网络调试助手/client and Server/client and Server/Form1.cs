@@ -23,7 +23,7 @@ namespace client_and_Server
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            tcpStatus.Items.Add("TCP Serve");
+            tcpStatus.Items.Add("TCP Server");
             tcpStatus.Items.Add("TCP Client");
             tcpStatus.SelectedIndex = 0;
             Control.CheckForIllegalCrossThreadCalls = false;
@@ -78,17 +78,10 @@ namespace client_and_Server
                     client.Connect(point);
 
                     ShowMsg("连接成功");
-
                     ShowMsg("服务器" + client.RemoteEndPoint.ToString());
-
-    
-
                     //连接成功后，就可以接收服务器发送的信息了
-
                     Thread th = new Thread(ReceiveMsg);
-
                     th.IsBackground = true;
-
                     th.Start();
 
                 }
