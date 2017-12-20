@@ -42,6 +42,8 @@
             this.lkIP = new System.Windows.Forms.Label();
             this.mbPort = new System.Windows.Forms.TextBox();
             this.mbIP = new System.Windows.Forms.TextBox();
+            this.isHex = new System.Windows.Forms.CheckBox();
+            this.tbHex = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -166,11 +168,35 @@
             this.mbIP.Size = new System.Drawing.Size(100, 21);
             this.mbIP.TabIndex = 9;
             // 
+            // isHex
+            // 
+            this.isHex.AutoSize = true;
+            this.isHex.Location = new System.Drawing.Point(42, 90);
+            this.isHex.Name = "isHex";
+            this.isHex.Size = new System.Drawing.Size(84, 16);
+            this.isHex.TabIndex = 13;
+            this.isHex.Text = "16进制发送";
+            this.isHex.UseVisualStyleBackColor = true;
+            this.isHex.CheckedChanged += new System.EventHandler(this.isHex_CheckedChanged);
+            // 
+            // tbHex
+            // 
+            this.tbHex.AutoSize = true;
+            this.tbHex.Location = new System.Drawing.Point(42, 113);
+            this.tbHex.Name = "tbHex";
+            this.tbHex.Size = new System.Drawing.Size(84, 16);
+            this.tbHex.TabIndex = 14;
+            this.tbHex.Text = "16进制显示";
+            this.tbHex.UseVisualStyleBackColor = true;
+            this.tbHex.CheckedChanged += new System.EventHandler(this.tbHex_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(702, 360);
+            this.Controls.Add(this.tbHex);
+            this.Controls.Add(this.isHex);
             this.Controls.Add(this.lkPort);
             this.Controls.Add(this.lkIP);
             this.Controls.Add(this.mbPort);
@@ -211,6 +237,8 @@
         private System.Windows.Forms.Label lkIP;
         private System.Windows.Forms.TextBox mbPort;
         private System.Windows.Forms.TextBox mbIP;
+        private System.Windows.Forms.CheckBox isHex;
+        private System.Windows.Forms.CheckBox tbHex;
     }
 }
 
