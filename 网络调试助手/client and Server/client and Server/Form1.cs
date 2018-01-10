@@ -28,9 +28,6 @@ namespace client_and_Server
             tcpStatus.SelectedIndex = 0;
             Control.CheckForIllegalCrossThreadCalls = false;
 
-
-
-
         }
 
         private void tcpStatus_SelectedIndexChanged(object sender, EventArgs e)
@@ -44,56 +41,60 @@ namespace client_and_Server
             }
 
         }
-      
+
+
+        bool bStatus = false;
         private void btnConnet_Click(object sender, EventArgs e)
         {
-            IPAddress ip = IPAddress.Parse(tbIP.Text);
-            IPEndPoint point = new IPEndPoint(ip, int.Parse(tbPort.Text));
-            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
+            bStatus = !bStatus;               
             if (tcpStatus.SelectedIndex == 0)
-            {
-                try
                 {
-                    socket.Bind(point);
-                    //同一个时间点过来10个客户端，排队
-                    socket.Listen(10);
-                    ShowMsg("服务器开始监听");
-                    Thread thread = new Thread(AcceptInfo);
-                    thread.IsBackground = true;
-                    thread.Start(socket);
+                    try
+                    {
+                        IPAddress ip = IPAddress.Parse(tbIP.Text);
+                        IPEndPoint point = new IPEndPoint(ip, int.Parse(tbPort.Text));
+                        Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                        socket.Bind(point);
+                        //同一个时间点过来10个客户端，排队
+                        socket.Listen(10);
+                        ShowMsg("服务器开始监听");
+                        Thread thread = new Thread(AcceptInfo);
+                        thread.IsBackground = true;
+                        thread.Start(socket);
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowMsg(ex.Message);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    ShowMsg(ex.Message);
-                }
-            }
-            else
-            {
-                try
-                {
-
+                    try
+                    {
                     //连接到服务器
+                        IPAddress ip = IPAddress.Parse(tbIP.Text);
+                        IPEndPoint point = new IPEndPoint(ip, int.Parse(tbPort.Text));
+                        Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                        client.Connect(point);
+                        ShowMsg("连接成功");
+                        ShowMsg("服务器" + client.RemoteEndPoint.ToString());
+                        //连接成功后，就可以接收服务器发送的信息了
+                        Thread th = new Thread(ReceiveMsg);
+                        th.IsBackground = true;
+                        th.Start();
 
-                    client.Connect(point);
+                    }
 
-                    ShowMsg("连接成功");
-                    ShowMsg("服务器" + client.RemoteEndPoint.ToString());
-                    //连接成功后，就可以接收服务器发送的信息了
-                    Thread th = new Thread(ReceiveMsg);
-                    th.IsBackground = true;
-                    th.Start();
+                    catch (Exception ex)
 
+                    {
+
+                        ShowMsg(ex.Message);
+
+                    }
                 }
-
-            catch (Exception ex)
-
-                {
-
-                    ShowMsg(ex.Message);
-
-                }
-            }
+            
+        
           
         }
         Dictionary<string, Socket> dic = new Dictionary<string, Socket>();
@@ -142,7 +143,7 @@ namespace client_and_Server
                         int n = client.Receive(buffer);
                         //将字节转换成字符串
                         string words = Encoding.UTF8.GetString(buffer, 0, n);
-                        ShowMsg(client.RemoteEndPoint.ToString() + ":" + words);
+                        ShowMsg( words);
                     }
                     catch (Exception ex)
                     {
@@ -193,6 +194,18 @@ namespace client_and_Server
             //主窗体关闭时关闭子线程
         }
         Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        public static string byteToHexStr(byte[] bytes)
+        {
+            string returnStr = "";
+            if (bytes != null)
+            {
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    returnStr += bytes[i].ToString("X2");//ToString("X2") 为C#中的字符串格式控制符
+                }
+            }
+            return returnStr;
+        }
         private void btnSend_Click(object sender, EventArgs e)
         {
             if (tcpStatus.SelectedIndex == 0)
@@ -201,8 +214,14 @@ namespace client_and_Server
                 {
                     ShowMsg(txtRecMsg.Text);
                     string ip = cbIpPort.Text;
+                 
                     byte[] buffer = Encoding.UTF8.GetBytes(txtSendMsg.Text);
-                    dic[ip].Send(buffer);
+                    for(int i=0;i<buffer.Length;i++)
+                    {
+                        txtSendMsg.Text += buffer[i].ToString("X2");
+                    }
+                
+                    dic[ip].Send( buffer );
                     // client.Send(buffer);
                 }
                 catch (Exception ex)
@@ -227,7 +246,6 @@ namespace client_and_Server
                         client.Send(buffer);
 
                     }
-
                     catch (Exception ex)
 
                     {
@@ -238,6 +256,5 @@ namespace client_and_Server
                 }
             }
         }
-
     }
 }
